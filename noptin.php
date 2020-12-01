@@ -563,38 +563,43 @@ class Noptin {
 	 * @access public
 	 */
 	public function load_plugin_textdomain() {
-
-		load_plugin_textdomain(
-			'newsletter-optin-box',
-			false,
-			'newsletter-optin-box/languages/'
-		);
-
 		/** Set our unique textdomain string */
 		$textdomain = 'newsletter-optin-box';
 
-		$locale = is_admin() && function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale();
+		// TODO: This filter is no longer needed.
+		// $lang_dir   = apply_filters( 'noptin_lang_dir', $plugin_dir . 'languages/' );
+		load_plugin_textdomain( $textdomain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
-		// phpcs:ignore Generic.Commenting.DocComment.MissingShort
-		/** @ignore */
-		$locale = apply_filters( 'plugin_locale', $locale, $textdomain );
+		// load_plugin_textdomain(
+		// 	'newsletter-optin-box',
+		// 	false,
+		// 	'newsletter-optin-box/languages/'
+		// );
 
-		/**
-		 * Set filter for WordPress languages directory.
-		 */
-		$wp_lang_dir = apply_filters(
-			'noptin_wp_lang_dir',
-			WP_LANG_DIR . '/newsletter-optin-box/' . $textdomain . '-' . $locale . '.mo'
-		);
+		// /** Set our unique textdomain string */
+		// $textdomain = 'newsletter-optin-box';
 
-		/** Translations: First, look in WordPress' "languages" folder = custom & update-secure! */
-		load_textdomain( $textdomain, $wp_lang_dir );
+		// $locale = is_admin() && function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale();
 
-		/** Translations: Secondly, look in plugin's "lang" folder = default */
-		$plugin_dir = trailingslashit( $this->plugin_path );
-		$lang_dir   = apply_filters( 'noptin_lang_dir', $plugin_dir . '/languages/' );
-		load_plugin_textdomain( $textdomain, false, $lang_dir );
+		// // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+		// /** @ignore */
+		// $locale = apply_filters( 'plugin_locale', $locale, $textdomain );
 
+		// /**
+		//  * Set filter for WordPress languages directory.
+		//  */
+		// $wp_lang_dir = apply_filters(
+		// 	'noptin_wp_lang_dir',
+		// 	WP_LANG_DIR . '/newsletter-optin-box/' . $textdomain . '-' . $locale . '.mo'
+		// );
+
+		// /** Translations: First, look in WordPress' "languages" folder = custom & update-secure! */
+		// load_textdomain( $textdomain, $wp_lang_dir );
+
+		// /** Translations: Secondly, look in plugin's "lang" folder = default */
+		// $plugin_dir = trailingslashit( $this->plugin_path );
+		// $lang_dir   = apply_filters( 'noptin_lang_dir', $plugin_dir . '/languages/' );
+		// load_plugin_textdomain( $textdomain, false, $lang_dir );
 	}
 
 }

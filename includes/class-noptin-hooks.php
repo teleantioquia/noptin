@@ -44,6 +44,7 @@ class Noptin_Hooks {
 	 */
 	public function maybe_hide_optin_forms() {
 
+		// This will be set to true if user un-suscribe from the email.
 		if (  ! empty( $_GET['noptin_hide'] )  ) {
 			setcookie( 'noptin_hide', 'true', 0, COOKIEPATH, COOKIE_DOMAIN );
 		}

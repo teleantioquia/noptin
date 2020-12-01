@@ -2,6 +2,67 @@
 
 	return array(
 
+		'TAFORM20201201' => array(
+			'title' => 'Teleantioquia',
+			'data'  => array(
+				// 'singleLine'            => true,
+				// 'formRadius'            => '10px',
+				// 'formWidth'             => '520px',
+				// 'formHeight'            => '280px',
+				'noptinFormBg'          => '#14cc60',
+				// 'noptinFormBgImg'       => '',
+				// 'noptinFormBgVideo'     => '',
+				'fields'                => array(
+					array(
+						'type'    => array(
+							'label' => __( 'Enter your name here', 'newsletter-optin-box' ),
+							'name'  => 'name',
+							'type'  => 'name',
+						),
+
+						'require' => false,
+						'key'     => 'key-fkluoh',
+					),
+
+					array(
+						'type'    => array(
+							'label' => __( 'Email Address', 'newsletter-optin-box' ),
+							'name'  => 'email',
+							'type'  => 'email',
+						),
+
+						'require' => 'true',
+						'key'     => 'noptin_email_key',
+					),
+				),
+
+				// 'imageMain'             => false,
+				// 'noptinFormBorderColor' => '#009688',
+				// 'image'                 => 'https://cdn.noptin.com/templates/images/email-icon.png',
+				// 'imagePos'              => 'right',
+				// 'noptinButtonLabel'     => __( 'Subscribe Now', 'newsletter-optin-box' ),
+				'buttonPosition'        => 'block',
+				'noptinButtonBg'        => '#0000ff',
+				// 'noptinButtonColor'     => '#fefefe',
+				// 'hideTitle'             => false,
+				// 'title'                 => __( 'Subscribe To Our Newsletter', 'newsletter-optin-box' ),
+				// 'titleColor'            => '#191919',
+				// 'hideDescription'       => false,
+				// 'description'           => sprintf(
+				// 	/* Translators: %1$s Opening link tag, %2$s Closing link tag. */
+				// 	__( 'Enter your email to receive a weekly round-up of our best posts.  %1$sLearn more! %2$s', 'newsletter-optin-box' ),
+				// 	'<a href="https://noptin.com/guide">',
+				// 	'</a>'
+				// ),
+				// 'descriptionColor'      => '#666666',
+				// 'hideNote'              => false,
+				// 'hideOnNoteClick'       => false,
+				// 'note'                  => __( 'By subscribing, you agree with our <a href="">privacy policy</a> and our terms of service.', 'newsletter-optin-box' ),
+				// 'noteColor'             => '#607D8B',
+				'CSS'                   => '.noptin-optin-form-wrapper *{}',
+			),
+		),
+
 		'PRO20200311'     => array(
 			'title' => __( 'Professional', 'newsletter-optin-box' ),
 			'data'  => array(
