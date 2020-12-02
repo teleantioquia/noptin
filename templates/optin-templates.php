@@ -5,30 +5,32 @@
 		'TAFORM20201201' => array(
 			'title' => 'Teleantioquia',
 			'data'  => array(
-				// 'singleLine'            => true,
-				// 'formRadius'            => '10px',
-				// 'formWidth'             => '520px',
+				'singleLine'            => false,
+				'formRadius'            => '24px',
+				// 'formWidth'             => 'auto',
 				// 'formHeight'            => '280px',
 				'noptinFormBg'          => '#14cc60',
-				// 'noptinFormBgImg'       => '',
-				// 'noptinFormBgVideo'     => '',
+				'noptinFormBgImg'       => '',
+				'noptinFormBgVideo'     => '',
 				'fields'                => array(
 					array(
 						'type'    => array(
-							'label' => __( 'Enter your name here', 'newsletter-optin-box' ),
-							'name'  => 'name',
-							'type'  => 'name',
+							'label'        => 'Nombre completo',
+							'render_label' => true,
+							'name'         => 'name',
+							'type'         => 'name',
 						),
 
-						'require' => false,
+						'require' => 'true',
 						'key'     => 'key-fkluoh',
 					),
 
 					array(
 						'type'    => array(
-							'label' => __( 'Email Address', 'newsletter-optin-box' ),
-							'name'  => 'email',
-							'type'  => 'email',
+							'label'        => __( 'Email Address', 'newsletter-optin-box' ),
+							'render_label' => true,
+							'name'         => 'email',
+							'type'         => 'email',
 						),
 
 						'require' => 'true',
@@ -38,28 +40,191 @@
 
 				// 'imageMain'             => false,
 				// 'noptinFormBorderColor' => '#009688',
-				// 'image'                 => 'https://cdn.noptin.com/templates/images/email-icon.png',
+				'image'                 => '',
 				// 'imagePos'              => 'right',
-				// 'noptinButtonLabel'     => __( 'Subscribe Now', 'newsletter-optin-box' ),
+				'noptinButtonLabel'     => __( 'Subscribe Now', 'newsletter-optin-box' ),
 				'buttonPosition'        => 'block',
-				'noptinButtonBg'        => '#0000ff',
-				// 'noptinButtonColor'     => '#fefefe',
-				// 'hideTitle'             => false,
-				// 'title'                 => __( 'Subscribe To Our Newsletter', 'newsletter-optin-box' ),
-				// 'titleColor'            => '#191919',
-				// 'hideDescription'       => false,
-				// 'description'           => sprintf(
-				// 	/* Translators: %1$s Opening link tag, %2$s Closing link tag. */
-				// 	__( 'Enter your email to receive a weekly round-up of our best posts.  %1$sLearn more! %2$s', 'newsletter-optin-box' ),
-				// 	'<a href="https://noptin.com/guide">',
-				// 	'</a>'
-				// ),
-				// 'descriptionColor'      => '#666666',
-				// 'hideNote'              => false,
-				// 'hideOnNoteClick'       => false,
-				// 'note'                  => __( 'By subscribing, you agree with our <a href="">privacy policy</a> and our terms of service.', 'newsletter-optin-box' ),
-				// 'noteColor'             => '#607D8B',
-				'CSS'                   => '.noptin-optin-form-wrapper *{}',
+				'noptinButtonBg'        => '#70b3e2',
+				'noptinButtonColor'     => '#fff',
+				'hideTitle'             => false,
+				'title'                 => 'Entérate con <div style="color: #212529; margin-top: -0.25rem;">Teleantioquia</div>',
+				'titleColor'            => '#fff',
+				'hideDescription'       => false,
+				'description'           => 'Suscribete a nuestro boletin para conocer las últimas noticias y toda la información de nuestros programas y especiales',
+				'descriptionColor'      => '#212529',
+				'hideNote'              => false,
+				'hideOnNoteClick'       => false,
+				'note'                  => __( 'By subscribing, you agree with our <a href="">privacy policy</a> and our terms of service.', 'newsletter-optin-box' ),
+				'noteColor'             => '#417a4d',
+				'CSS'                   => '.noptin-optin-form {
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.noptin-form-header {
+	position: relative;
+	width: 100%;
+	flex: 0 0 100%;
+	max-width: 100%;
+	text-align: left;
+}
+
+.noptin-form-heading {
+	font-family: Montserrat-Bold, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	font-weight: 500;
+	font-size: 1.75rem;
+}
+
+.noptin-form-description {
+	font-family: Montserrat-Medium, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	min-height: 1px;
+	max-height: 99999px;
+	font-size: 1rem;
+	font-weight: 400;
+}
+
+.noptin-form-footer {
+	position: relative;
+	width: 100%;
+	flex: 0 0 100%;
+	max-width: 100%;
+
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.noptin-form-fields {
+	display: flex;
+	align-items: center;
+}
+
+.noptin-form-footer .noptin-form-button-block {
+	display: inline-block;
+	width: auto;
+}
+
+.noptin-form-field-label {
+	margin: 0;
+	color: #fff;
+	font-family: Montserrat-Medium, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	font-size: 16px;
+	cursor: pointer;
+	display: block;
+}
+
+.noptin-form-footer .noptin-optin-field-wrapper:not(.noptin-optin-field-wrapper-hidden) {
+	margin-bottom: 0;
+}
+
+.noptin-form-footer .noptin-optin-field-wrapper:not(.noptin-optin-field-wrapper-hidden) .noptin-form-field {
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom: 1px solid #e5e5e5;
+	background-color: transparent;
+	outline: 0;
+	border-radius: 0;
+	font-size: 16px;
+	margin: 0 0 8px 0;
+	height: 2.5rem;
+	padding: 0.45rem 0.6rem;
+	color: #fff;
+}
+
+.noptin-form-footer .noptin-optin-field-wrapper:not(.noptin-optin-field-wrapper-hidden) .noptin-form-field:focus {
+	background-color: transparent;
+	border-radius: 0;
+	outline: 0;
+	border-color: #e5e5e5;
+	color: #fff;
+}
+
+/* Placeholder color */
+.noptin-form-footer .noptin-optin-field-wrapper:not(.noptin-optin-field-wrapper-hidden) .noptin-form-field::placeholder {
+	color: #fff;
+	// Uniform opacity across multiple browsers.
+	opacity: 0.5;
+}
+
+/* This is a extremely ugly hack to remove the Chrome
+background from input(s) elements when we select a value
+from the Chrome autocomplete dialog box that appears on some input elements.
+See: https://stackoverflow.com/a/32505530/4086981
+*/
+.noptin-form-footer .noptin-optin-field-wrapper:not(.noptin-optin-field-wrapper-hidden) input:-webkit-autofill,
+.noptin-form-footer .noptin-optin-field-wrapper:not(.noptin-optin-field-wrapper-hidden) input:-webkit-autofill:hover,
+.noptin-form-footer .noptin-optin-field-wrapper:not(.noptin-optin-field-wrapper-hidden) input:-webkit-autofill:focus,
+.noptin-form-footer .noptin-optin-field-wrapper:not(.noptin-optin-field-wrapper-hidden) input:-webkit-autofill:active {
+	/* We don\'t define the standard transition property
+	since I only want this to be applied on Chrome or WebKit browsers.
+	*/
+	-webkit-transition: color 9999s ease-out, background-color 9999s ease-out;
+	-webkit-transition-delay: 9999s;
+}
+
+.noptin-optin-field-wrapper-name {
+	margin-bottom: 0;
+	margin-right: 20px;
+}
+
+.noptin-optin-field-wrapper-email {
+	margin-bottom: 0;
+	margin-right: 10px;
+}
+
+.noptin-form-footer .noptin-form-submit {
+	font-family: Montserrat-Bold, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	border-radius: 3rem;
+}
+
+.noptin-form-footer .noptin-form-submit:hover {
+	/* to override button inline styles. */
+	background-color: #509acf !important;
+}
+
+/* To style the thanks message after subscription */
+.noptin-big {
+	display: flex;
+	align-items: center;
+}
+
+/* To style the form in the editor */
+.post-type-noptin-form .noptin-optin-form-wrapper {
+	width: auto !important;
+}
+
+@media (min-width: 1200px) {
+	.noptin-form-header {
+		flex: 0 0 30%;
+		max-width: 30%;
+	}
+
+	.noptin-form-footer {
+		flex: 0 0 70%;
+		max-width: 70%;
+	}
+}
+
+@media (max-width: 1199.98px) {
+	.noptin-form-footer {
+		display: block;
+	}
+
+	.noptin-form-fields {
+		display: block;
+	}
+
+	.noptin-form-footer .noptin-optin-field-wrapper:not(.noptin-optin-field-wrapper-hidden) {
+		margin-right: 0;
+		margin-bottom: 1.5rem;
+	}
+
+	.noptin-form-footer .noptin-form-button-block {
+		display: block;
+	}
+}
+				',
 			),
 		),
 

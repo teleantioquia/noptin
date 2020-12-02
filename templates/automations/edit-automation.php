@@ -55,11 +55,11 @@
 				</div>
 
 				<div id="postbox-container-1" class="postbox-container">
-    				<?php do_meta_boxes( 'noptin_page_noptin-automation', 'side', $campaign ); ?>
+    			<?php do_meta_boxes( 'noptin_page_noptin-automation', 'side', $campaign ); ?>
 				</div>
 
 				<div id="postbox-container-2" class="postbox-container">
-
+					<div>hello ba</div>
 					<?php
 						/**
 						 * Fires before printing the first metabox in the automation campaign editor

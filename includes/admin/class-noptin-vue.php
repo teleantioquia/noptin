@@ -472,6 +472,7 @@ class Noptin_Vue {
 	 */
 	public static function print_default_markup() {
 		?>
+		<label    v-if="field.type.render_label" class="noptin-form-field-label" v-html='field.type.label'></label>
 		<input 		v-if="field.type.type=='email'" 		   name='email' 		  type="email" 		class="noptin-form-field" 			:placeholder="field.type.label"  required />
 		<input 		v-if="field.type.type=='first_name'" 	   name='first_name' 	  type="text" 		class="noptin-form-field" 			:placeholder="field.type.label" :required="field.require" />
 		<input 		v-if="field.type.type=='last_name'" 	   name='last_name' 	  type="text" 		class="noptin-form-field" 			:placeholder="field.type.label" :required="field.require" />
@@ -493,6 +494,7 @@ class Noptin_Vue {
 		if ( ! empty( $field['type']['label'] ) ) {
 			$label = esc_attr( $field['type']['label'] );
 		}
+		
 
 		// Required fields.
 		$required = '';
@@ -503,29 +505,39 @@ class Noptin_Vue {
 		// Field names.
 		$name = esc_attr( $field['key'] );
 
+
+		// Renders the label element if required.
+		$id_attribute = '';
+		if ( ! empty( $field['type']['render_label'] )
+			&& 'true' === $field['type']['render_label']
+			&& ! empty( $field['type']['label'] ) ) {
+			echo "<label for='{$name}' class='noptin-form-field-label'>{$field['type']['label']}</label>";
+			$id_attribute = "id='$name'";
+		}
+
 		// Email.
 		if ( 'email' === $field['type']['type'] ) {
-			echo "<input name='$name' type='email' class='noptin-form-field' placeholder='$label'  required />";
+			echo "<input $id_attribute name='$name' type='email' class='noptin-form-field' placeholder='$label'  required />";
 		}
 
 		// First name.
 		if ( 'first_name' === $field['type']['type'] ) {
-			echo "<input name='$name' type='text' class='noptin-form-field' placeholder='$label'  $required />";
+			echo "<input $id_attribute name='$name' type='text' class='noptin-form-field' placeholder='$label'  $required />";
 		}
 
 		// Last name.
 		if ( 'last_name' === $field['type']['type'] ) {
-			echo "<input name='$name' type='text' class='noptin-form-field' placeholder='$label'  $required />";
+			echo "<input $id_attribute name='$name' type='text' class='noptin-form-field' placeholder='$label'  $required />";
 		}
 
 		// Full name.
 		if ( 'name' === $field['type']['type'] ) {
-			echo "<input name='$name' type='text' class='noptin-form-field' placeholder='$label'  $required />";
+			echo "<input $id_attribute name='$name' type='text' class='noptin-form-field' placeholder='$label'  $required />";
 		}
 
 		// Text.
 		if ( 'text' === $field['type']['type'] ) {
-			echo "<input name='$name' type='text' class='noptin-form-field' placeholder='$label'  $required />";
+			echo "<input $id_attribute name='$name' type='text' class='noptin-form-field' placeholder='$label'  $required />";
 		}
 
 		// Hidden.
@@ -542,9 +554,8 @@ class Noptin_Vue {
 
 		// Textarea.
 		if ( 'textarea' === $field['type']['type'] ) {
-			echo "<textarea name='$name' class='noptin-form-field' placeholder='$label' $required></textarea>";
+			echo "<textarea $id_attribute name='$name' class='noptin-form-field' placeholder='$label' $required></textarea>";
 		}
-
 	}
 
 	/**
