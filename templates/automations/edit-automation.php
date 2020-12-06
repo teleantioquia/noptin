@@ -59,7 +59,6 @@
 				</div>
 
 				<div id="postbox-container-2" class="postbox-container">
-					<div>hello ba</div>
 					<?php
 						/**
 						 * Fires before printing the first metabox in the automation campaign editor

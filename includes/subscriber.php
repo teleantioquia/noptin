@@ -1023,9 +1023,9 @@ function noptin_generate_user_name( $prefix = '' ) {
 function register_default_noptin_subscriber_metaboxes( $subscriber ) {
 
 	add_meta_box(
-        'noptin_subscriber_details',
-        __('Subscriber Details','newsletter-optin-box'),
-        'noptin_subscriber_metabox_callback',
+		'noptin_subscriber_details',
+		__('Subscriber Details','newsletter-optin-box'),
+		'noptin_subscriber_metabox_callback',
 		'noptin_page_noptin-subscribers',
 		'normal',
 		'default',
@@ -1033,9 +1033,9 @@ function register_default_noptin_subscriber_metaboxes( $subscriber ) {
 	);
 
 	add_meta_box(
-        'noptin_subscriber_fields',
-        __('Custom Fields','newsletter-optin-box'),
-        'noptin_subscriber_metabox_callback',
+		'noptin_subscriber_fields',
+		__('Custom Fields','newsletter-optin-box'),
+		'noptin_subscriber_metabox_callback',
 		'noptin_page_noptin-subscribers',
 		'advanced',
 		'default',
@@ -1043,9 +1043,9 @@ function register_default_noptin_subscriber_metaboxes( $subscriber ) {
 	);
 
 	add_meta_box(
-        'noptin_subscriber_save',
-        __('Save Changes','newsletter-optin-box'),
-        'noptin_subscriber_metabox_callback',
+		'noptin_subscriber_save',
+		__('Save Changes','newsletter-optin-box'),
+		'noptin_subscriber_metabox_callback',
 		'noptin_page_noptin-subscribers',
 		'side',
 		'default',

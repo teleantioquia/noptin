@@ -1217,6 +1217,17 @@ function log_noptin_message( $message, $code = 'error' ) {
 }
 
 /**
+ * Logs a message to the wordpress .log file.
+ */
+function log_noptin_message_file( $message ) {
+	if ( is_array( $message ) || is_object( $message ) ) {
+		error_log( print_r( $message, true ) );
+	} else {
+		error_log( $message );
+	}
+}
+
+/**
  * Logs a message.
  *
  * @since 1.2.3

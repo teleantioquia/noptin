@@ -121,6 +121,9 @@ class Noptin_Background_Mailer extends Noptin_Background_Process {
 			$next_recipient = array_shift( $item['recipients'] );
 		}
 
+		// If $item['subscribers_query'] is not set, it won't sent any emails,
+		// note that this can be empty to send emails to all subscribers.
+
 		// Or a WHERE query to be executed on the subscribers table.
 		if ( empty( $next_recipient ) && isset( $item['subscribers_query'] ) ) {
 			$next_recipient = $this->fetch_subscriber_from_query( $item );
@@ -146,6 +149,7 @@ class Noptin_Background_Mailer extends Noptin_Background_Process {
 			$item['next_recipient_data'] = $item['campaign_data'];
 		}
 
+		// Enters here only if the 'campaign_data' wasn't set on the $item added to the queue.
 		// If this is a campaign, fetch the email body and subject.
 		if ( isset( $item['campaign_id'] ) && empty( $item['next_recipient_data']['email_body'] ) ) {
 
@@ -199,6 +203,10 @@ class Noptin_Background_Mailer extends Noptin_Background_Process {
 	 */
 	public function fetch_subscriber_from_query( $item ) {
 
+		log_noptin_message_file( 'Noptin_Background_Mailer::fetch_subscriber_from_query()' );
+		log_noptin_message_file( '$item' );
+		log_noptin_message_file( $item );
+
 		// Ensure that the query is an array...
 		$subscriber_query = ( ! is_array( $item['subscribers_query'] ) ) ? array() : $item['subscribers_query'];
 
@@ -229,6 +237,9 @@ class Noptin_Background_Mailer extends Noptin_Background_Process {
 
 		// Filters the query used to find the next recipient of a mass mail.
 		$query = apply_filters( 'noptin_background_mailer_subscriber_query', $subscriber_query, $item );
+
+		log_noptin_message_file( '$subscriber_query' );
+		log_noptin_message_file( $subscriber_query );
 
 		// Run the query...
 		$subscriber = new Noptin_Subscriber_Query( $query );

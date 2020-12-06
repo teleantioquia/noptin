@@ -108,7 +108,7 @@ class Noptin_New_Post_Notify {
 	/**
 	 * Filters default automation data
 	 */
-	public function render_automation_settings( $campaign ) {
+	public function render_automation_settings( $campaign, $metabox ) {
 
 		$url = add_query_arg(
 			array(
@@ -368,6 +368,11 @@ class Noptin_New_Post_Notify {
 			),
 		);
 
+		// Each post can override the 'email_body', 'email_subject' or 'preview_text' defined in the campaign by setting
+		// 'noptin_post_notify_content', 'noptin_post_notify_subject', 'noptin_post_notify_preview_text' post metas respectively
+		// however right now, these post metas only can be changed throught the code, if requested this would be matter of creating custom post metas
+		// for the given posts types edit screens.
+
 		$content  = get_post_meta( $post_id, 'noptin_post_notify_content', true );
 		if ( ! empty( $content ) ) {
 			$item['campaign_data']['email_body'] = wp_kses_post( stripslashes_deep( $content ) );
@@ -383,7 +388,10 @@ class Noptin_New_Post_Notify {
 			$item['campaign_data']['preview_text'] = sanitize_text_field( stripslashes_deep( $preview ) );
 		}
 
+		log_noptin_message_file( 'Noptin_New_Post_Notify::notify()' );
+		log_noptin_message_file( $item );
 		$item = apply_filters( 'noptin_mailer_new_post_automation_details', $item, $post_id, $campaign_id );
+		log_noptin_message_file( $item );
 
 		if ( apply_filters( 'noptin_should_send_new_post_notification', true, $item ) ) {
 			$noptin->bg_mailer->push_to_queue( $item );

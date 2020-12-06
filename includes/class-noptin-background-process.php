@@ -60,6 +60,8 @@ if ( ! class_exists( 'Noptin_Background_Process' ) ) {
 			$this->cron_hook_identifier     = $this->identifier . '_cron';
 			$this->cron_interval_identifier = $this->identifier . '_cron_interval';
 
+			// Executed each time the cron is executed, based on the $this->cron_interval_identifier recurrence value
+			// by default 5 minutes.
 			add_action( $this->cron_hook_identifier, array( $this, 'handle_cron_healthcheck' ) );
 			add_filter( 'cron_schedules', array( $this, 'schedule_cron_healthcheck' ) );
 		}
@@ -416,7 +418,12 @@ if ( ! class_exists( 'Noptin_Background_Process' ) ) {
 		}
 
 		/**
-		 * Schedule cron healthcheck
+		 * Schedule cron healthcheck.
+		 * 
+		 * Adds additional values for recurrence that can be used in the recurrence parameter
+		 * in wp_schedule_event() function. This is to make a specific recurrence option only for this instance.
+		 *
+		 * @see https://developer.wordpress.org/reference/functions/wp_schedule_event/
 		 *
 		 * @access public
 		 * @param mixed $schedules Schedules.

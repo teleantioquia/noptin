@@ -375,6 +375,10 @@ class Noptin_Admin {
 			23
 		);
 
+
+		// This doesn't have a render callback since it's using the default post type
+		// screen, this is a trick to make the a post type menu as a subpage instead of a parent page.
+
 		// Add the newsletter page.
 		add_submenu_page(
 			'noptin',
@@ -996,6 +1000,7 @@ class Noptin_Admin {
 		 */
 		do_action( 'noptin_after_save_form', $this );
 
+		wp_send_json( $_POST['state'], 200 );
 		exit; // This is important.
 	}
 
@@ -1291,6 +1296,11 @@ class Noptin_Admin {
 			}
 
 			update_noptin_subscriber( $subscriber, $data );
+
+			// Custom metada, added by Jose Villalobos (Teleantioquia) from the custom enhancer.
+			update_noptin_subscriber_meta( $subscriber, 'noptin_enhancer_mail_lists', sanitize_text_field( $post['noptin_enhancer_mail_lists'] ) );
+
+
 			$this->show_success( __( 'Subscriber successfully updated', 'newsletter-optin-box' ) );
 		}
 

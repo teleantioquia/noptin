@@ -180,6 +180,9 @@ class Noptin {
 		// Set up hooks.
 		$this->register_hooks();
 
+		// Set up custom addons.
+		$this->setup_addons();
+
 		/**
 		 * Fires after Noptin loads.
 		 *
@@ -275,6 +278,20 @@ class Noptin {
 
 	}
 
+
+	/**
+	 * Enable custom-made addons to improve the functionallity in the free
+	 * version of this plugin.
+	 *
+	 * These aren't the official addons listed on the noptin page:
+	 * https://noptin.com/product/
+	 */
+	private function setup_addons() {
+
+		$enhancer = new Noptin_Custom_Enhancer();
+
+	}
+
 	/**
 	 * Load integrations after plugins are loaded.
 	 * 
@@ -361,6 +378,7 @@ class Noptin {
 		$locations = array(
 			'includes',
 			'includes/admin',
+			'includes/addons',
 			'includes/integrations',
 			'includes/automation-rules',
 			'includes/automation-rules/actions',
