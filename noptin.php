@@ -289,7 +289,7 @@ class Noptin {
 	private function setup_addons() {
 
 		$enhancer = new Noptin_Custom_Enhancer();
-
+		$rejilla  = new Noptin_Rejilla_Programacion();
 	}
 
 	/**
