@@ -388,10 +388,7 @@ class Noptin_New_Post_Notify {
 			$item['campaign_data']['preview_text'] = sanitize_text_field( stripslashes_deep( $preview ) );
 		}
 
-		log_noptin_message_file( 'Noptin_New_Post_Notify::notify()' );
-		log_noptin_message_file( $item );
 		$item = apply_filters( 'noptin_mailer_new_post_automation_details', $item, $post_id, $campaign_id );
-		log_noptin_message_file( $item );
 
 		if ( apply_filters( 'noptin_should_send_new_post_notification', true, $item ) ) {
 			$noptin->bg_mailer->push_to_queue( $item );

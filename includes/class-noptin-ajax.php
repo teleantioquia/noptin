@@ -784,8 +784,6 @@ class Noptin_Ajax {
 		 * @since 1.2.4
 		 */
 		$filtered = apply_filters( 'noptin_add_ajax_subscriber_filter_details', wp_unslash( $filtered ), $form );
-		log_noptin_message_file( 'Noptin_Ajax::add_subscriber()' );
-		log_noptin_message_file( $filtered );
 		$inserted = add_noptin_subscriber( $filtered );
 
 		if ( is_string( $inserted ) ) {

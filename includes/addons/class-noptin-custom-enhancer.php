@@ -73,6 +73,18 @@ class Noptin_Custom_Enhancer {
 		// Get the post types configured for this post automation.
 		$saved_post_types = get_post_meta( $campaign->ID, 'noptin_enhancer_post_types_to_notify', true );
 
+		// $result = update_noptin_subscriber_meta( $recipient_data['merge_tags']['id'], $key, '1' );
+		// $result = get_metadata( 'noptin_subscriber', 6, '_campaign_654_639', true );
+		// $result = get_noptin_subscriber_meta( 6, '_campaign_654_639', true );
+		// echo print_r( $result ) . '<br>';
+
+		global $wp_object_cache;
+		$result = update_noptin_subscriber_meta( 6, '_random_metadata', 'a value fooo 2' );
+		echo '<pre>';
+		echo empty( $result ) ? 'false' : 'true - ' . strval( $result );
+		echo '</pre>';
+
+
 		$mail_lists = get_post_meta( $campaign->ID, 'noptin_enhancer_campaign_mail_lists', true );
 		echo '<p><b>Notificar a los usuarios de las siguientes mail lists:</b></p>';
 		echo '<p>';
@@ -303,11 +315,7 @@ class Noptin_Custom_Enhancer {
 			// Array filter without callback, just remove empty elements.
 			$campaign_mail_list = array_filter( $campaign_mail_list );
 
-			log_noptin_message_file( 'Noptin_Custom_Enhancer::filter_users_to_notify()' );
-			log_noptin_message_file( $campaign_mail_list );
-
 			$regex_exp = implode( '|', $campaign_mail_list );
-			log_noptin_message_file( 'regex: ' . $regex_exp );
 
 			if ( ! empty( $regex_exp ) ) {
 				$item['subscribers_query'] = array(

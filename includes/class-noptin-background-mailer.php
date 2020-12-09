@@ -55,6 +55,10 @@ class Noptin_Background_Mailer extends Noptin_Background_Process {
 			return $item;
 		}
 
+		log_noptin_message_file( 'Noptin_Background_Mailer::task()' );
+		log_noptin_message_file( '$key' );
+		log_noptin_message_file( $key );
+
 		// Try sending the email.
 		if ( noptin()->mailer->prepare_then_send( $recipient_data ) ) {
 
@@ -65,7 +69,16 @@ class Noptin_Background_Mailer extends Noptin_Background_Process {
 
 			}
 
+			log_noptin_message_file( '$recipient_data["merge_tags"]["id"]' );
+			log_noptin_message_file( $recipient_data['merge_tags']['id'] );
+
 			if ( ! empty( $recipient_data['merge_tags']['id'] ) ) {
+				// $key example: "_campaign_660_639"
+				// which is: "_campaign_{$post_id}_{$campaign_id}"
+				// this subscriber meta is deleted on the 
+				// 'noptin_background_mailer_complete' hook, in the
+				// new-post-notify class.
+				// The hook is called when we finish sending the email to all queried users.
 				update_noptin_subscriber_meta( $recipient_data['merge_tags']['id'], $key, '1' );
 			}
 		} else {
@@ -77,6 +90,7 @@ class Noptin_Background_Mailer extends Noptin_Background_Process {
 
 			}
 
+			log_noptin_message_file( 'cannot send the email' );
 			if ( ! empty( $recipient_data['merge_tags']['id'] ) ) {
 				update_noptin_subscriber_meta( $recipient_data['merge_tags']['id'], $key, '0' );
 			}
@@ -136,11 +150,16 @@ class Noptin_Background_Mailer extends Noptin_Background_Process {
 				update_post_meta( $item['campaign_id'], 'completed', 1 );
 			}
 
+			log_noptin_message_file( 'Noptin_Background_Mailer::prepare_campaign_data()' );
+			log_noptin_message_file( '$item' );
+			log_noptin_message_file( $item );
+
 			do_action( 'noptin_background_mailer_complete', $item );
 
 			return false;
 		}
 
+		// Will be used by the next invokation.
 		$item['current_recipient'] = $next_recipient;
 
 		// Recipient data.
@@ -203,10 +222,6 @@ class Noptin_Background_Mailer extends Noptin_Background_Process {
 	 */
 	public function fetch_subscriber_from_query( $item ) {
 
-		log_noptin_message_file( 'Noptin_Background_Mailer::fetch_subscriber_from_query()' );
-		log_noptin_message_file( '$item' );
-		log_noptin_message_file( $item );
-
 		// Ensure that the query is an array...
 		$subscriber_query = ( ! is_array( $item['subscribers_query'] ) ) ? array() : $item['subscribers_query'];
 
@@ -237,9 +252,6 @@ class Noptin_Background_Mailer extends Noptin_Background_Process {
 
 		// Filters the query used to find the next recipient of a mass mail.
 		$query = apply_filters( 'noptin_background_mailer_subscriber_query', $subscriber_query, $item );
-
-		log_noptin_message_file( '$subscriber_query' );
-		log_noptin_message_file( $subscriber_query );
 
 		// Run the query...
 		$subscriber = new Noptin_Subscriber_Query( $query );
