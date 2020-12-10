@@ -118,6 +118,11 @@ class Noptin_Rejilla_Programacion {
     // Use this 
     $notification_key = "_program_notification_$program_name_slug--$timestamp";
 
+    // If this subscriber already requested a notification for this program, dont schedule again.
+    if ( noptin_subscriber_meta_exists( $subscriber_id, $notification_key ) ) {
+      return;
+    }
+
     // This subscriber's meta is just used to fetch the initial user to notify
     // not to prevent the notification from being sent multiple times.
     // for that is used the 'key' option in the bg_mailer $item.
