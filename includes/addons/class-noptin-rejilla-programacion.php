@@ -90,7 +90,9 @@ class Noptin_Rejilla_Programacion {
     $program_name_slug = '';
     $program_name      = '';
     if ( isset( $_POST['noptin_rejilla_program_name'] ) && ! empty( $_POST['noptin_rejilla_program_name'] ) ) {
-      $program_name      = strtolower( urldecode( $_POST['noptin_rejilla_program_name'] ) );
+      // TODO: Program name lowercase doesnt works with tildes.
+      // TODO: Check if mb_strtolower() fucntion fixed the tildes problem.
+      $program_name      = mb_strtolower( urldecode( $_POST['noptin_rejilla_program_name'] ), 'UTF-8' );
       $program_name_slug = sanitize_title_with_dashes( $program_name );
     }
 
