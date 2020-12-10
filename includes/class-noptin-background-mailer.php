@@ -55,10 +55,6 @@ class Noptin_Background_Mailer extends Noptin_Background_Process {
 			return $item;
 		}
 
-		log_noptin_message_file( 'Noptin_Background_Mailer::task()' );
-		log_noptin_message_file( '$key' );
-		log_noptin_message_file( $key );
-
 		// Try sending the email.
 		if ( noptin()->mailer->prepare_then_send( $recipient_data ) ) {
 
@@ -68,9 +64,6 @@ class Noptin_Background_Mailer extends Noptin_Background_Process {
 				update_post_meta( $item['campaign_id'], '_noptin_sends', $sents + 1 );
 
 			}
-
-			log_noptin_message_file( '$recipient_data["merge_tags"]["id"]' );
-			log_noptin_message_file( $recipient_data['merge_tags']['id'] );
 
 			if ( ! empty( $recipient_data['merge_tags']['id'] ) ) {
 				// $key example: "_campaign_660_639"
@@ -90,7 +83,6 @@ class Noptin_Background_Mailer extends Noptin_Background_Process {
 
 			}
 
-			log_noptin_message_file( 'cannot send the email' );
 			if ( ! empty( $recipient_data['merge_tags']['id'] ) ) {
 				update_noptin_subscriber_meta( $recipient_data['merge_tags']['id'], $key, '0' );
 			}
@@ -150,10 +142,6 @@ class Noptin_Background_Mailer extends Noptin_Background_Process {
 				update_post_meta( $item['campaign_id'], 'completed', 1 );
 			}
 
-			log_noptin_message_file( 'Noptin_Background_Mailer::prepare_campaign_data()' );
-			log_noptin_message_file( '$item' );
-			log_noptin_message_file( $item );
-
 			do_action( 'noptin_background_mailer_complete', $item );
 
 			return false;
@@ -179,7 +167,17 @@ class Noptin_Background_Mailer extends Noptin_Background_Process {
 			if ( 'newsletter' === get_post_meta( $post->ID, 'campaign_type', true ) ) {
 				$item['next_recipient_data']['email_subject'] = $post->post_title;
 			} else {
-				$item['next_recipient_data']['email_subject'] = get_post_meta( $post->ID, 'email_subject', true );
+
+				$subject = get_post_meta( $post->ID, 'email_subject', true );
+				// Don't sure if this is an error in original source code, but the email subject
+				// is being saved in a post meta with meta key 'subject' not 'email_subject' this problem
+				// was no evident in newsletter and post_notification because the subject was extracted
+				// differently for those.
+				if ( empty( $subject ) ) {
+					$subject = get_post_meta( $post->ID, 'subject', true );
+				}
+
+				$item['next_recipient_data']['email_subject'] = $subject;
 			}
 
 			// Finally, fetch the preview text.

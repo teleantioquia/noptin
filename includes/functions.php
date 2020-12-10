@@ -14,6 +14,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Converts the first word's letter to uppercase even if has 'tildes'.
+ * 
+ * @param string  $str  The string to transform.
+ * @return string       The transformed string.
+ */
+function noptin_mb_ucfirst( $str ) {
+	$fc = mb_strtoupper( mb_substr( $str, 0, 1 ) );
+	return $fc . mb_substr( $str , 1 );
+}
+
+/**
  * Returns a reference to the main Noptin instance.
  *
  * @since 1.0.4

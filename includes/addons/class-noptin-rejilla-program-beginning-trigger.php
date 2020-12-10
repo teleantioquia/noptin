@@ -66,9 +66,6 @@ class Noptin_Rejilla_Program_Beginning_Trigger extends Noptin_Abstract_Trigger {
    */
   public function maybe_trigger( $subscriber_id ) {
 
-    log_noptin_message_file( 'Noptin_Rejilla_Program_Beginning_Trigger::maybe_trigger()' );
-    log_noptin_message_file( $subscriber_id );
-
     // Trigger the action associated with this trigger on current rule.
     $this->trigger( $subscriber_id, array() );
   }

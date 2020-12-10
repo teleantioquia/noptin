@@ -24,7 +24,7 @@ class Noptin_Rejilla_Programacion {
     add_action( 'noptin_add_ajax_subscriber', array( $this, 'maybe_schedule_notification' ), 10, 2 );
 
     // Invoked when a program the user requested the notification is close to start.
-    add_action( 'noptin_rejilla_program_notification', array( $this, 'maybe_send_notification' ), 10, 5 );
+    add_action( 'noptin_rejilla_program_notification', array( $this, 'maybe_send_notification' ), 10, 6 );
 
     // Registers an email automation trigger in the admin menu.
     add_filter( 'noptin_email_automation_triggers', array( $this, 'register_automation_trigger_option' ), 10, 2 );
@@ -98,14 +98,31 @@ class Noptin_Rejilla_Programacion {
       return;
     }
 
+    // Example shape of program info, this is defined in the rejilla plugin.
+    // $program_info = array(
+    //   'program_name'        => $name,
+    //   'transmission_date'   => ( new DateTime( $program['transmission_date'], wp_timezone() ) )->format( 'Y-m-d H:i:s' ),
+    //   'program_description' => $description,
+    //   'viewable_from_web'   => $program['viewable_from_web'],
+    //   'link_to'             => $link_to,
+    // );
+    // Gets the program info.
+    $program_info = array();
+    if ( isset( $_POST['noptin_rejilla_program_info'] ) && ! empty( $_POST['noptin_rejilla_program_info'] ) ) {
+      // Required to call stripslashes() fucntion to strip back slashes and decode the json string.
+      // see related issue: https://stackoverflow.com/questions/47914737/how-to-access-json-decode-data-after-passing-through-ajax.
+      // otherwise json_decade() won't parse the string.
+      $program_info = json_decode( stripslashes( $_POST['noptin_rejilla_program_info'] ), true );
+    }
+
     // Use this 
     $notification_key = "_program_notification_$program_name_slug--$timestamp";
 
-    // Can have, 'not_sent' and 'sent' as values.
-    add_noptin_subscriber_meta( $subscriber_id, $notification_key, 'not_sent' );
-
-    log_noptin_message_file( 'Noptin_Rejilla_Programacion::maybe_schedule_notification()' );
-    log_noptin_message_file( $notification_key );
+    // This subscriber's meta is just used to fetch the initial user to notify
+    // not to prevent the notification from being sent multiple times.
+    // for that is used the 'key' option in the bg_mailer $item.
+    // see maybe_send_notification() method.
+    update_noptin_subscriber_meta( $subscriber_id, $notification_key, 'registered' );
 
     // See class-noptin-new-post-notify.php to see inspiration about this.
     // Are there any new post automations.
@@ -119,8 +136,7 @@ class Noptin_Rejilla_Programacion {
       // TODO: For far future, support multiple templates for different program names.
       // Check if the automation applies here.
       if ( $this->is_automation_valid_for( $automation, $program_name ) ) {
-        log_noptin_message_file( 'scheduling notification' );
-        log_noptin_message_file( $automation );
+
         /**
          * Invoked when the program the user requested the notification is close to start.
          * Note that it can happen that two different users register to the same program + transmission date
@@ -131,6 +147,7 @@ class Noptin_Rejilla_Programacion {
          * @param string $program_name          The program name lowercased.
          * @param string $program_name_slug     The slug for the program, example if the program was called 'CASA DEPORTES', here will receive: 'casa-deportes'.
          * @param int    $timestamp             The unix timestamp at which the program will be transmitted.
+         * @param array  $program_info          Associative array with human-legible info about the program, used to generate some email merge tags.
          */
         schedule_noptin_background_action(
           $timestamp,
@@ -140,7 +157,9 @@ class Noptin_Rejilla_Programacion {
           $notification_key,
           $program_name,
           $program_name_slug,
-          $timestamp
+          $timestamp,
+          // Program info used to generate the merge tags.
+          $program_info
         );
       }
     }
@@ -166,11 +185,9 @@ class Noptin_Rejilla_Programacion {
    * @param string $program_name          The program name lowercased.
    * @param string $program_name_slug     The slug for the program, example if the program was called 'CASA DEPORTES', here will receive: 'casa-deportes'.
    * @param int    $timestamp             The unix timestamp at which the program will be transmitted.
+   * @param array  $program_info          Associative array with human-legible info about the program, used to generate some email merge tags.
    */
-  public function maybe_send_notification( $automation_id, $notification_key, $program_name, $program_name_slug, $timestamp ) {
-    log_noptin_message_file( 'Noptin_Rejilla_Programacion::maybe_send_notification()' );
-    log_noptin_message_file( $program_name );
-    log_noptin_message_file( $notification_key );
+  public function maybe_send_notification( $automation_id, $notification_key, $program_name, $program_name_slug, $timestamp, $program_info ) {
 
     $automation = get_post( $automation_id );
 
@@ -189,12 +206,14 @@ class Noptin_Rejilla_Programacion {
     }
 
     $key = $automation->ID . '_' . $program_name_slug . '--' . $timestamp;
-    log_noptin_message_file( $key );
 
     $noptin = noptin();
 
     $item = array(
       'campaign_id'       => $automation->ID,
+      // This key is used to prevent, send the same notification multiple times
+      // to same user, it's managed by bg_mailer.
+      'key'               => $key,
       // By default, send this to all active subscribers.
       // with the $notification_key subscriber's meta data.
 			'subscribers_query' => array(
@@ -206,21 +225,120 @@ class Noptin_Rejilla_Programacion {
           array(
             'key'     => $notification_key,
             'compare' => '=',
-            'value'   => 'not_sent',
+            // Not required.
+            'value'   => 'registered',
           ),
         ),
       ),
-      // This key is used to prevent, send the same notification multiple times
-      // to same user.
-      'key'               => $key,
 			'campaign_data'     => array(
-				'campaign_id' => $automation->ID
+        'campaign_id' => $automation->ID,
+        // Used in the email [[tag_name]]
+        'merge_tags'  => $this->get_merge_tags( $program_name, $program_info ),
 			),
     );
     
     $noptin->bg_mailer->push_to_queue( $item );
     $noptin->bg_mailer->save()->dispatch();
   }
+
+  /**
+   * Get the merge tags used in the email.
+   *
+   * @param string $program_name          The program name lowercased.
+   * @param array  $program_info          Associative array with human-legible info about the program, used to generate some email merge tags.
+   */
+  private function get_merge_tags( $program_name, $program_info ) {
+    $tags = array();
+
+    // Example shape of program info, this is defined in the rejilla plugin.
+    // in class-ta-prog-all-programs-grid-v2-shortcode.php shortcode file.
+    // $program_info = array(
+    //   'program_name'        => $name,
+    //   'transmission_date'   => ( new DateTime( $program['transmission_date'], wp_timezone() ) )->format( 'Y-m-d H:i:s' ),
+    //   'program_description' => $description,
+    //   'viewable_from_web'   => $program['viewable_from_web'],
+    //   'link_to'             => $link_to,
+    // );
+
+    $tags['program_name'] = noptin_mb_ucfirst( $program_name );
+
+    if ( ! empty( $program_info['program_description'] ) ) {
+      $tags['program_description'] = $program_info['program_description'];
+    }
+
+    if ( ! empty( $program_info['transmission_date'] ) ) {
+      // Convert from string to DateTime object.
+      $transmision_date               = DateTime::createFromFormat( 'Y-m-d H:i:s', $program_info['transmission_date'], wp_timezone() );
+      $tags['transmission_hour']      = $transmision_date->format( 'H:i' );
+      // Eg: jueves 24 de octubre
+      $tags['transmission_day']       = wp_date( 'l j \d\e F', $transmision_date->getTimestamp(), wp_timezone() );
+      $tags['transmission_full_date'] = $program_info['transmission_date'];
+      // TODO: Add localized data.
+    }
+
+    $tags['transmission_timezone']           = 'Bogotá';
+    $tags['transmission_timezone_wordpress'] = wp_timezone_string();
+
+    $tags['program_url'] = $program_info['link_to'];
+    
+    // Button to show: 'al-aire' page.
+    $tags['al_aire_link']    = $this->get_live_url();
+    $tags['al_aire_button']  = $this->program_button( $this->get_live_url() );
+    $tags['/al_aire_button'] = '</a></div>';
+
+    if ( filter_var( $program_info['viewable_from_web'], FILTER_VALIDATE_BOOLEAN ) ) {
+      $tags['if_viewable_from_web']  = '';
+      $tags['/if_viewable_from_web'] = '';
+
+      // Just start an html comment, this is because the display: none, is not
+      // widely supported across email clients.
+      // See:
+      // https://stackoverflow.com/questions/48253050/how-to-use-display-none-on-outlook-2007-2010-2013-in-html-email
+      // https://www.litmus.com/blog/gmail-now-supports-display-none-what-it-means-for-your-email-designs/
+      // https://github.com/mjmlio/mjml/issues/770
+      $tags['if_no_viewable_from_web']  = "<!--";
+      $tags['/if_no_viewable_from_web'] = '-->';
+    } else {
+      $tags['if_viewable_from_web']  = "<!--";
+      $tags['/if_viewable_from_web'] = '-->';
+
+      $tags['if_no_viewable_from_web']  = '';
+      $tags['/if_no_viewable_from_web'] = '';
+    }
+
+    // Button to program play.teleantioquia.co page.
+    $tags['program_button'] = $this->program_button( $program_info['link_to'] );
+    $tags['/program_button'] = '</a></div>';
+
+    return $tags;
+  }
+
+  private function get_live_url() {
+    $live_page_url = '';
+    // This returns an associative array where key is the name of the menu location
+    // and value is the id of the menu associated to that menu location.
+    $locations = get_nav_menu_locations(); // Get our nav locations (set in our theme, usually functions.php).
+    // The name of the menu location from which extract the 'al aire' page url.
+    $menu_location = 'primary-live';
+    if ( isset( $locations[ $menu_location ] ) ) {
+      // Get an array of all the items in the given menu.
+      $menu_items = wp_get_nav_menu_items( $locations[ $menu_location ] );
+      if ( is_array( $menu_items ) && isset( $menu_items[0] ) ) {
+        // This menu location only will show the first item which will be the link to 'al aire' page.
+        $live_page_url = $menu_items[0]->url;
+      }
+    }
+
+    return $live_page_url;
+  }
+
+  /**
+	 * Generates read more button markup
+	 */
+	public function program_button( $url ) {
+		$url = esc_url( $url );
+		return "<div style='text-align: left; padding: 20px;' align='left'> <a href='$url' class='noptin-round' style='background: #14cc60; display: inline-block; padding: 16px 36px; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;'>";
+	}
 
   /**
 	 * Returns an array of all published new post notifications
@@ -316,8 +434,8 @@ class Noptin_Rejilla_Programacion {
 
 		if ( 'program_notification' === $data['automation_type'] ) {
 			$data['email_body']   = noptin_ob_get_clean( $email_body_location );
-			$data['subject']      = '[[post_title]]';
-			$data['preview_text'] = __( 'New article published on [[blog_name]]', 'newsletter-optin-box' );
+			$data['subject']      = '«[[program_name]]» esta a punto de empezar';
+			$data['preview_text'] = 'Míralo desde nuestra señal online o sintonizando nuestro canal de televisión';
 		}
 		return $data;
 

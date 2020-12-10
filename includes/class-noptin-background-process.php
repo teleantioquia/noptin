@@ -101,13 +101,6 @@ if ( ! class_exists( 'Noptin_Background_Process' ) ) {
 		public function save() {
 			$key = $this->generate_key();
 
-			log_noptin_message_file( 'Noptin_Background_Process::save()' );
-			log_noptin_message_file( '$key' );
-			log_noptin_message_file( $key );
-
-			log_noptin_message_file( '$this->data' );
-			log_noptin_message_file( $this->data );
-
 			if ( ! empty( $this->data ) ) {
 				update_site_option( $key, $this->data );
 			}
@@ -299,10 +292,6 @@ if ( ! class_exists( 'Noptin_Background_Process' ) ) {
 				)
 			);
 
-			log_noptin_message_file( 'Noptin_Background_Process::get_batch()' );
-			log_noptin_message_file( '$query' );
-			log_noptin_message_file( $query );
-
 			$batch       = new stdClass();
 			$batch->key  = $query->$column;
 			$batch->data = maybe_unserialize( $query->$value_column );
@@ -322,10 +311,6 @@ if ( ! class_exists( 'Noptin_Background_Process' ) ) {
 			do {
 				$batch = $this->get_batch();
 
-				log_noptin_message_file( 'Noptin_Background_Process::handle()' );
-				log_noptin_message_file( '$batch' );
-				log_noptin_message_file( $batch );
-
 				foreach ( $batch->data as $key => $value ) {
 					$task = $this->task( $value );
 
@@ -340,9 +325,6 @@ if ( ! class_exists( 'Noptin_Background_Process' ) ) {
 						break;
 					}
 				}
-
-				log_noptin_message_file( '$batch (after task)' );
-				log_noptin_message_file( $batch );
 
 				// Update or delete current batch.
 				if ( ! empty( $batch->data ) ) {
