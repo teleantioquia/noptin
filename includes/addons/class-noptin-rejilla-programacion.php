@@ -94,6 +94,8 @@ class Noptin_Rejilla_Programacion {
       // TODO: Check if mb_strtolower() fucntion fixed the tildes problem.
       $program_name      = mb_strtolower( urldecode( $_POST['noptin_rejilla_program_name'] ), 'UTF-8' );
       $program_name_slug = sanitize_title_with_dashes( $program_name );
+      log_noptin_message_file( $program_name );
+      log_noptin_message_file( $program_name_slug );
     }
 
     if ( empty( $program_name_slug ) ) {
@@ -280,7 +282,6 @@ class Noptin_Rejilla_Programacion {
       // Eg: jueves 24 de octubre
       $tags['transmission_day']       = wp_date( 'l j \d\e F', $transmision_date->getTimestamp(), wp_timezone() );
       $tags['transmission_full_date'] = $program_info['transmission_date'];
-      // TODO: Add localized data.
     }
 
     $tags['transmission_timezone']           = 'Bogotá';
