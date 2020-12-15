@@ -267,6 +267,7 @@ class Noptin_Rejilla_Programacion {
     //   'program_description' => $description,
     //   'viewable_from_web'   => $program['viewable_from_web'],
     //   'link_to'             => $link_to,
+    //   'live_page_url'       => $this->live_page_url,
     // );
 
     $tags['program_name'] = noptin_mb_ucfirst( $program_name );
@@ -287,11 +288,11 @@ class Noptin_Rejilla_Programacion {
     $tags['transmission_timezone']           = 'Bogotá';
     $tags['transmission_timezone_wordpress'] = wp_timezone_string();
 
-    $tags['program_url'] = $program_info['link_to'];
+    $tags['program_url'] = esc_url( $program_info['link_to'] );
     
     // Button to show: 'al-aire' page.
-    $tags['al_aire_link']    = $this->get_live_url();
-    $tags['al_aire_button']  = $this->program_button( $this->get_live_url() );
+    $tags['al_aire_link']    = esc_url( $program_info['live_page_url'] );
+    $tags['al_aire_button']  = $this->program_button( $tags['al_aire_link'] );
     $tags['/al_aire_button'] = '</a></div>';
 
     if ( filter_var( $program_info['viewable_from_web'], FILTER_VALIDATE_BOOLEAN ) ) {
@@ -319,25 +320,6 @@ class Noptin_Rejilla_Programacion {
     $tags['/program_button'] = '</a></div>';
 
     return $tags;
-  }
-
-  private function get_live_url() {
-    $live_page_url = '';
-    // This returns an associative array where key is the name of the menu location
-    // and value is the id of the menu associated to that menu location.
-    $locations = get_nav_menu_locations(); // Get our nav locations (set in our theme, usually functions.php).
-    // The name of the menu location from which extract the 'al aire' page url.
-    $menu_location = 'primary-live';
-    if ( isset( $locations[ $menu_location ] ) ) {
-      // Get an array of all the items in the given menu.
-      $menu_items = wp_get_nav_menu_items( $locations[ $menu_location ] );
-      if ( is_array( $menu_items ) && isset( $menu_items[0] ) ) {
-        // This menu location only will show the first item which will be the link to 'al aire' page.
-        $live_page_url = $menu_items[0]->url;
-      }
-    }
-
-    return $live_page_url;
   }
 
   /**
