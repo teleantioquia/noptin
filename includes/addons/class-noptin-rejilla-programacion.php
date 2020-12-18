@@ -94,8 +94,6 @@ class Noptin_Rejilla_Programacion {
       // TODO: Check if mb_strtolower() fucntion fixed the tildes problem.
       $program_name      = mb_strtolower( urldecode( $_POST['noptin_rejilla_program_name'] ), 'UTF-8' );
       $program_name_slug = sanitize_title_with_dashes( $program_name );
-      log_noptin_message_file( $program_name );
-      log_noptin_message_file( $program_name_slug );
     }
 
     if ( empty( $program_name_slug ) ) {

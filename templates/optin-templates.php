@@ -8,7 +8,12 @@
 				'singleLine'            => false,
 				'formRadius'            => '24px',
 				// 'formWidth'             => 'auto',
-				// 'formHeight'            => '280px',
+				// This is used to set the min-height however when you set
+				// the Form Type option to widget it will change this to 400px
+				// requiring from you to update again the value manually in the editor.
+				// this is set in the includes\assets\js\src\partials\noptin.js file
+				// in the updateFormSizes() method.
+				'formHeight'            => '280px',
 				'noptinFormBg'          => '#14cc60',
 				'noptinFormBgImg'       => '',
 				'noptinFormBgVideo'     => '',
@@ -51,7 +56,7 @@
 				'titleColor'            => '#fff',
 				'hideDescription'       => false,
 				'description'           => 'Suscribete a nuestro boletin para conocer las últimas noticias y toda la información de nuestros programas y especiales',
-				'descriptionColor'      => '#212529',
+				'descriptionColor'      => '#fff',
 				'hideNote'              => false,
 				'hideOnNoteClick'       => false,
 				'note'                  => __( 'By subscribing, you agree with our <a href="">privacy policy</a> and our terms of service.', 'newsletter-optin-box' ),
@@ -79,7 +84,7 @@
 	font-family: Montserrat-Medium, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 	min-height: 1px;
 	max-height: 99999px;
-	font-size: 1rem;
+	font-size: 14px;
 	font-weight: 400;
 }
 

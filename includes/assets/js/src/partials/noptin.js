@@ -31,6 +31,7 @@ export default {
 
 	updateFormSizes (instance) {
 
+		// Widget
 		if (instance.optinType == 'sidebar') {
 			instance.formHeight = '400px'
 			instance.formWidth = '300px'
@@ -38,18 +39,21 @@ export default {
 			return;
 		}
 
+		// Popup
 		if (instance.optinType == 'popup') {
 			instance.formWidth = '620px'
 			instance.formHeight = '280px'
 			return;
 		}
 
+		// Sliding
 		if (instance.optinType == 'slide_in') {
 			instance.formWidth = '400px'
 			instance.formHeight = '280px'
 			return;
 		}
 
+		// Shortcode (inpost)
 		instance.formHeight = '280px'
 		instance.formWidth = '620px'
 
