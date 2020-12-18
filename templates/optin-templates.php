@@ -54,9 +54,18 @@
 				'hideTitle'             => false,
 				'title'                 => 'Entérate con <div style="color: #212529; margin-top: -0.25rem;">Teleantioquia</div>',
 				'titleColor'            => '#fff',
+				// Description design.
 				'hideDescription'       => false,
 				'description'           => 'Suscribete a nuestro boletin para conocer las últimas noticias y toda la información de nuestros programas y especiales',
 				'descriptionColor'      => '#fff',
+				'descriptionTypography' => array(
+					'font_size'      => '14',
+					'font_weight'    => '500',
+					'line_height'    => '1.3',
+					'decoration'     => '',
+					'style'          => '',
+					'generated'      => 'font-size: 14px; font-weight: 500; line-height: 1.3;',
+				),
 				'hideNote'              => false,
 				'hideOnNoteClick'       => false,
 				'note'                  => __( 'By subscribing, you agree with our <a href="">privacy policy</a> and our terms of service.', 'newsletter-optin-box' ),
@@ -84,8 +93,6 @@
 	font-family: Montserrat-Medium, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 	min-height: 1px;
 	max-height: 99999px;
-	font-size: 14px;
-	font-weight: 400;
 }
 
 .noptin-form-footer {
