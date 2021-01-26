@@ -2,9 +2,9 @@
 Contributors: picocodes, mutendebrian
 Tags: newsletter, email newsletter form, email opt-in, email popup, newsletter widget, email subscription
 Requires at least: 4.9
-Tested up to: 5.5
+Tested up to: 5.6
 Requires PHP: 5.3
-Version: 1.3.7
+Version: 1.4.0
 Stable tag: trunk
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -137,6 +137,16 @@ Yeah. Your newsletter subscription forms will take your theme's default styling.
 12. State of the art newsletter subscription form editor
 
 == Changelog ==
+
+= 1.4.0 - 2020-12-22 =
+- Add a conditional newsletter subscription checkbox to Contact Form 7.
+- Add a conditional newsletter subscription checkbox to Ninja Forms.
+- Add a conditional newsletter subscription checkbox to WPForms.
+
+= 1.3.9 - 2020-12-07 =
+- Fix WooCommerce checkout not adding new customers to the newsletter.
+- Add a nofollow attribute to newsletter unsubscribe links (@shawnkhall).
+- Add newsletter unsubscribe email headers (@shawnkhall).
 
 = 1.3.8 - 2020-11-20 =
 - Anyone with a "manage_noptin" capability can now manage newsletters and subscribers.
