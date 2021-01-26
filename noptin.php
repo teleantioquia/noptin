@@ -381,6 +381,7 @@ class Noptin {
 		$locations = array(
 			"$plugin_path/includes",
 			"$plugin_path/includes/admin",
+			"$plugin_path/includes/addons",
 			"$plugin_path/includes/integrations",
 			"$plugin_path/includes/automation-rules",
 			"$plugin_path/includes/automation-rules/actions",

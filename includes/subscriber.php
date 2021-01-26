@@ -14,17 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Determines if a meta field with the given key exists for the given noptin subscriber ID.
- *
- * @param int    $subscriber_id  ID of the subscriber metadata is for.
- * @param string $meta_key       Metadata key.
- * 
- */
-function noptin_subscriber_meta_exists( $subscriber_id = 0, $meta_key = '' ) {
-	return metadata_exists( 'noptin_subscriber', $subscriber_id, $meta_key );
-}
-
-/**
  * Retrieve subscriber meta field for a subscriber.
  *
  * @param   int    $subscriber_id  Subscriber ID.
