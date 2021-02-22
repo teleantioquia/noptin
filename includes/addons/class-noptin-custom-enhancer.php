@@ -78,11 +78,11 @@ class Noptin_Custom_Enhancer {
 		// $result = get_noptin_subscriber_meta( 6, '_campaign_654_639', true );
 		// echo print_r( $result ) . '<br>';
 
-		global $wp_object_cache;
-		$result = update_noptin_subscriber_meta( 6, '_random_metadata', 'a value fooo 2' );
-		echo '<pre>';
-		echo empty( $result ) ? 'false' : 'true - ' . strval( $result );
-		echo '</pre>';
+		// global $wp_object_cache;
+		// $result = update_noptin_subscriber_meta( 6, '_random_metadata', 'a value fooo 2' );
+		// echo '<pre>';
+		// echo empty( $result ) ? 'false' : 'true - ' . strval( $result );
+		// echo '</pre>';
 
 
 		$mail_lists = get_post_meta( $campaign->ID, 'noptin_enhancer_campaign_mail_lists', true );
