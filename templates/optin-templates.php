@@ -21,6 +21,7 @@
 					array(
 						'type'    => array(
 							'label'        => 'Nombre completo',
+							'placeholder'  => 'Escribe tu nombre',
 							'render_label' => true,
 							'name'         => 'name',
 							'type'         => 'name',
@@ -32,7 +33,8 @@
 
 					array(
 						'type'    => array(
-							'label'        => __( 'Email Address', 'newsletter-optin-box' ),
+							'label'        => 'Correo electrónico',
+							'placeholder'  => 'Escribe tu correo',
 							'render_label' => true,
 							'name'         => 'email',
 							'type'         => 'email',
@@ -45,6 +47,13 @@
 
 				// 'imageMain'             => false,
 				// 'noptinFormBorderColor' => '#009688',
+				'formBorder'            => array(
+					'style'         => 'none',
+					'border_radius' => 25,
+					'border_width'  => 0,
+					'border_color'  => '#f8f9fa',
+					'generated'     => "border-style: none; border-radius: 25px; border-width: 0px; border-color: #f8f9fa;",
+				),
 				'image'                 => '',
 				// 'imagePos'              => 'right',
 				'noptinButtonLabel'     => __( 'Subscribe Now', 'newsletter-optin-box' ),
@@ -70,9 +79,16 @@
 				'hideOnNoteClick'       => false,
 				'note'                  => __( 'By subscribing, you agree with our <a href="">privacy policy</a> and our terms of service.', 'newsletter-optin-box' ),
 				'noteColor'             => '#417a4d',
-				'CSS'                   => '.noptin-optin-form {
+				'CSS'                   => '.noptin-optin-form-wrapper {
+	box-shadow: 0px 3px 20px #00000029;
+	background: transparent linear-gradient(90deg, #14CC60 0%, #7FE670 100%) 0% 0% no-repeat padding-box !important;
+}
+
+.noptin-optin-form-wrapper .noptin-optin-form {
 	flex-direction: row;
 	flex-wrap: wrap;
+	background-image: url(' . noptin()->plugin_url . 'includes/addons/textura_ta_emociona.png);
+	background-size: cover;
 }
 
 .noptin-form-header {
