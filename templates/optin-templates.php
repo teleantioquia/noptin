@@ -240,6 +240,74 @@ See: https://stackoverflow.com/a/32505530/4086981
 			),
 		),
 
+		'TAFORM20210307'  => array(
+			'title' => 'Notificacion Rejilla',
+			'data'  => array(
+				'singleLine'            => true,
+				'formRadius'            => '10px',
+				'formWidth'             => '520px',
+				'formHeight'            => '280px',
+				'noptinFormBg'          => '#ffffff',
+				'noptinFormBgImg'       => '',
+				'noptinFormBgVideo'     => '',
+				'fields'                => array(
+					array(
+						'type'    => array(
+							'label' => __( 'Enter your email address here', 'newsletter-optin-box' ),
+							'name'  => 'email',
+							'type'  => 'email',
+						),
+
+						'require' => 'true',
+						'key'     => 'noptin_email_key',
+					),
+
+				),
+
+				'imageMain'             => '',
+				'noptinFormBorderColor' => '#ffffff',
+				'formBorder'            => array(
+					'style'         => 'none',
+					'border_radius' => 0,
+					'border_width'  => 0,
+					'border_color'  => '#ffffff',
+					'generated'    => "border-style: none; border-radius: 0px; border-width: 0px; border-color: #ffffff;",
+				),
+				'image'                 => '',
+				'imagePos'              => 'right',
+				'noptinButtonLabel'     => __( 'SUBSCRIBE NOW', 'newsletter-optin-box' ),
+				'buttonPosition'        => 'block',
+				'noptinButtonBg'        => '#F44336',
+				'noptinButtonColor'     => '#fefefe',
+				'hideTitle'             => false,
+				'title'                 => __( 'Subscribe For Latest Updates', 'newsletter-optin-box' ),
+				'titleColor'            => '#191919',
+				'hideDescription'       => false,
+				'description'           => __( "We'll send you the best business news and informed analysis on what matters the most to you.", 'newsletter-optin-box' ),
+				'descriptionColor'      => '#666666',
+				'hideNote'              => false,
+				'hideOnNoteClick'       => false,
+				'note'                  => __( 'By subscribing, you agree with our <a href="">privacy policy</a> and our terms of service.', 'newsletter-optin-box' ),
+				'noteColor'             => '#607D8B',
+				'titleTypography'       => array(
+					'font_size'      => '32',
+					'font_weight'    => '700',
+					'line_height'    => '1.5',
+					'decoration'     => '',
+					'style'          => 'italic',
+					'generated'      => 'font-size: 32px; font-weight: 700; line-height: 1.5;',
+				),
+				'CSS'                   => '.noptin-optin-form-wrapper .noptin-form-field{
+	text-align: center;
+ 	font-weight: 500;
+}
+
+.noptin-optin-form-wrapper form .noptin-form-footer .noptin-form-submit{
+	font-weight: 500;
+}',
+			),
+		),
+
 		'PRO20200311'     => array(
 			'title' => __( 'Professional', 'newsletter-optin-box' ),
 			'data'  => array(
