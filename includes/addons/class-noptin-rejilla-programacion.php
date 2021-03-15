@@ -214,6 +214,8 @@ class Noptin_Rejilla_Programacion {
 
     $key = $automation->ID . '_' . $program_name_slug . '--' . $timestamp;
 
+    log_noptin_message_file( 'Sending message for ' . $key );
+
     $noptin = noptin();
 
     $item = array(
