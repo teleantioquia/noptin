@@ -49,7 +49,10 @@
 ?>
 <div style='<?php echo $wrapper_styles; ?>' data-trigger='<?php echo $trigger ?>' data-after-click='<?php echo $after_click ?>' data-on-scroll='<?php echo $on_scroll ?>' data-after-delay='<?php echo $delay ?>' data-once-per-session='<?php echo $session ?>' class='noptin-optin-form-wrapper <?php echo $class ?>'>
 	<form class="noptin-optin-form <?php echo $singleLine ? 'noptin-form-single-line' : 'noptin-form-new-line' ?>" <?php do_action( 'noptin_frontend_optin_form_attrs', $form ); ?>>
-
+		<div class="circle-decorator">
+			<div class="circle-decorator__outline circle-decorator__outline--small"></div>
+			<div class="circle-decorator__fill circle-decorator__fill--small"></div>
+		</div>
 		<div class="noptin-form-header <?php echo ! empty( $image ) ? esc_attr( $imagePos ) : 'no-image' ?>">
 
 			<div class="noptin-form-header-text">
