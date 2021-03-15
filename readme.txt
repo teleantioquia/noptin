@@ -2,9 +2,9 @@
 Contributors: picocodes, mutendebrian
 Tags: newsletter, email newsletter form, email opt-in, email popup, newsletter widget, email subscription
 Requires at least: 4.9
-Tested up to: 5.6
+Tested up to: 5.7
 Requires PHP: 5.3
-Version: 1.4.3
+Version: 1.4.4
 Stable tag: trunk
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -139,6 +139,13 @@ Yeah. Your newsletter subscription forms will take your theme's default styling.
 12. State of the art newsletter subscription form editor
 
 == Changelog ==
+
+= 1.4.4 - 2021-03-14 =
+* Fix checkbox always shows no (Ville Viljanen).
+* Fix featured image not showing in new post notification newsletter.
+* Add a [[resubscribe_url]] tag usable in emails and unsubscribe message.
+* Add the `[noptin-show-if-subscriber]` and `[noptin-show-if-non-subscriber]` shortcodes.
+* Add the `[noptin-subscriber-count]` shortcode.
 
 = 1.4.3 - 2021-02-17 =
 * Fix undefined variable notice in new hook.
