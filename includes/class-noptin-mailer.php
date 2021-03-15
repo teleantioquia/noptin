@@ -485,7 +485,7 @@ class Noptin_Mailer {
 			$headers[] = "List-Unsubscribe:<$url>";
 		}
 
-		// Althought Headers can be passed either as an array or string, mailjet doesn't support the headers
+		// Althought Headers can be passed either as an array or string to wp_mail function, mailjet doesn't support the headers
 		// in the string form.
 		// https://github.com/mailjet/api-documentation/issues/21.
 		// $headers = implode( "\r\n", $headers );
@@ -663,9 +663,6 @@ class Noptin_Mailer {
 
 		// Prepare the sending function.
 		$sending_function = apply_filters( 'noptin_mailer_email_sending_function', 'wp_mail', $this );
-
-		log_noptin_message_file( 'Noptin_Mailer::send()' );
-		log_noptin_message_file( $data['headers'] );
 
 		// Send the actual email.
 		$result = call_user_func(
