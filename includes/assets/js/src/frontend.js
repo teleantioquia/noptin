@@ -236,6 +236,11 @@
 		$(document).on('click', '.noptin-showing .noptin-popup-close', function (e) {
 			$(this).closest('.noptin-showing').removeClass('noptin-showing')
 		});
+
+		$(document).on('click', '.noptin-form-footer .noptin-form-submit.noptin-teleantioquia-form-submit-accept', function (e) {
+			console.log('close after click on accept button');
+			popups.close();
+		});
 	});
 
 	// Submits forms via ajax.
@@ -248,6 +253,11 @@
 
 			//Prevent the form from submitting
 			e.preventDefault();
+
+			// Check if any of the ancestors of the form is .noptin-popup
+			// to see if this is a popup form.
+			// https://stackoverflow.com/a/3753701/4086981
+			var isPopup = $(this).parents('.noptin-popup').length > 0;
 
 			//Modify form state
 			$(this)
@@ -312,7 +322,17 @@
 						}
 
 						if (data.action == 'msg') {
-							$(this).html('<div class="noptin-big noptin-padded">' + data.msg + '</div>');
+							var acceptButton = '';
+							if (isPopup) {
+								// TODO: Pass this from the admin panel.
+								acceptButton = '<div class="noptin-form-footer"><button style="background-color: #14cc60; color: #fefefe;" class="noptin-form-submit noptin-teleantioquia-form-submit-accept">Aceptar</button></div>';
+							}
+
+							$(this).html('<div class="noptin-big noptin-padded">' +
+								data.msg +
+								acceptButton +
+							'</div>');
+
 							$(this).css({
 								display: 'flex',
 								justifyContent: 'center'
